@@ -1,15 +1,13 @@
-import asyncio
-from telegram.ext import ApplicationBuilder, CommandHandler
+from aiogram import Bot, Dispatcher, executor, types
 
-# ... (8529951592:AAH8ToZc__XkiCV8AKAke5vOYM1yM4SVqPE) ...
+API_TOKEN = '8529951592:AAGWQD_kvwKnI2lPWAP1ulKGZe6OtPsYhB0'
 
-async def main():
-    # تأكد من وضع التوكن الخاص بك هنا أو استخدام المتغير البيئي
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    print("البوت يعمل الآن...")
-    await app.run_polling()
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
+
+@dp.message_handler(commands=['start'])
+async def send_welcome(message: types.Message):
+    await message.answer("أهلاً بك في متجر ALNiSi! البوت يعمل الآن بشكل صحيح.")
 
 if __name__ == '__main__':
-    # هذا السطر يحل مشكلة await outside function
-    asyncio.run(main())
+    executor.start_polling(dp, skip_updates=True)
